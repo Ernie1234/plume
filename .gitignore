@@ -43,3 +43,6 @@ Thumbs.db
 
 .nx/polygraph
 test-output
+
+# Environment variables
+.env
