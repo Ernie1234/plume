@@ -1,21 +1,56 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2022"],
+    "baseUrl": ".",
+
+    "strict": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
     "importHelpers": true,
     "isolatedModules": true,
-    "lib": ["es2022"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "es2022",
-    "customConditions": ["@plume/source"]
-  }
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    "paths": {
+      "@plume/types": ["packages/types/src/index.ts"],
+      "@plume/types/*": ["packages/types/src/*"],
+
+      "@plume/validation": ["packages/validation/src/index.ts"],
+      "@plume/validation/*": ["packages/validation/src/*"],
+
+      "@plume/auth": ["packages/auth/src/index.ts"],
+      "@plume/auth/*": ["packages/auth/src/*"],
+
+      "@plume/logger": ["packages/logger/src/index.ts"],
+      "@plume/logger/*": ["packages/logger/src/*"],
+
+      "@plume/database": ["packages/database/src/index.ts"],
+      "@plume/database/*": ["packages/database/src/*"],
+
+      "@plume/redis": ["packages/redis/src/index.ts"],
+      "@plume/redis/*": ["packages/redis/src/*"],
+
+      "@plume/rabbitmq": ["packages/rabbitmq/src/index.ts"],
+      "@plume/rabbitmq/*": ["packages/rabbitmq/src/*"],
+
+      "@plume/grpc-types": ["packages/grpc-types/src/index.ts"],
+      "@plume/grpc-types/*": ["packages/grpc-types/src/*"],
+
+      "@plume/ui": ["packages/ui/src/index.ts"],
+      "@plume/ui/*": ["packages/ui/src/*"],
+
+      "@plume/config": ["packages/config/index.ts"],
+      "@plume/config/*": ["packages/config/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }
