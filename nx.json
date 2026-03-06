@@ -60,8 +60,27 @@
         "targetName": "test"
       },
       "exclude": [
-        "api-gateway-e2e/**/*"
+        "api-gateway-e2e/**/*",
+        "apps/api-gateway-e2e/**/*",
+        "apps/user-service-e2e/**/*"
       ]
+    },
+    {
+      "plugin": "@nx/next/plugin",
+      "options": {
+        "startTargetName": "start",
+        "buildTargetName": "build",
+        "devTargetName": "serve",
+        "serveStaticTargetName": "serve-static",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    },
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
     }
   ],
   "generators": {
@@ -112,6 +131,16 @@
     },
     "serve": {
       "cache": false
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     }
   }
 }

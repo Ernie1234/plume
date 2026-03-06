@@ -1,5 +1,3 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "api-gateway"
-  - "api-gateway-e2e"
