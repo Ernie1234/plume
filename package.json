@@ -1,21 +1,69 @@
 {
   "name": "@plume/source",
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {},
+  "version": "0.0.1",
+  "description": "Plume - A real-time social messaging platform",
   "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "@nx/js": "22.5.4",
-    "@swc-node/register": "~1.11.1",
-    "@swc/core": "~1.15.5",
-    "@swc/helpers": "~0.5.18",
-    "nx": "22.5.4",
-    "prettier": "~3.6.2",
-    "tslib": "^2.3.0",
-    "typescript": "~5.9.2"
+  "license": "MIT",
+  "packageManager": "pnpm@9.4.0",
+  "scripts": {
+    "dev": "nx run-many --target=serve --all --parallel",
+    "dev:web": "nx serve web",
+    "dev:gateway": "nx serve api-gateway",
+    "dev:infra": "docker-compose -f docker-compose.dev.yml up -d",
+    "build": "nx run-many --target=build --all",
+    "build:affected": "nx affected --target=build",
+    "test": "nx run-many --target=test --all",
+    "test:affected": "nx affected --target=test",
+    "lint": "nx run-many --target=lint --all",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,css}\"",
+    "generate:proto": "node scripts/generate-proto.js",
+    "db:migrate": "nx run drizzle-schema:migrate",
+    "db:push": "nx run drizzle-schema:push",
+    "db:studio": "nx run drizzle-schema:studio",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "docker:logs": "docker-compose logs -f",
+    "prepare": "husky install",
+    "nx": "nx",
+    "graph": "nx graph"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@nx/eslint": "22.5.4",
+    "@nx/eslint-plugin": "22.5.4",
+    "@nx/jest": "22.5.4",
+    "@nx/js": "22.5.4",
+    "@nx/nest": "22.5.4",
+    "@nx/next": "22.5.4",
+    "@nx/node": "22.5.4",
+    "@nx/webpack": "22.5.4",
+    "@swc-node/register": "~1.11.1",
+    "@swc/core": "~1.15.18",
+    "@swc/helpers": "~0.5.19",
+    "@types/node": "20.19.11",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "nx": "22.5.4",
+    "prettier": "~3.8.1",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.8.1",
+    "typescript": "~5.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,json,md,css}": [
+      "prettier --write"
+    ]
+  }
 }
