@@ -3,54 +3,35 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "node",
-    "lib": ["ES2022"],
+    "lib": [
+      "ES2022"
+    ],
     "baseUrl": ".",
-
     "strict": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-
     "importHelpers": true,
     "isolatedModules": true,
-
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-
     "paths": {
-      "@plume/types": ["packages/types/src/index.ts"],
-      "@plume/types/*": ["packages/types/src/*"],
-
-      "@plume/validation": ["packages/validation/src/index.ts"],
-      "@plume/validation/*": ["packages/validation/src/*"],
-
-      "@plume/auth": ["packages/auth/src/index.ts"],
-      "@plume/auth/*": ["packages/auth/src/*"],
-
-      "@plume/logger": ["packages/logger/src/index.ts"],
-      "@plume/logger/*": ["packages/logger/src/*"],
-
-      "@plume/database": ["packages/database/src/index.ts"],
-      "@plume/database/*": ["packages/database/src/*"],
-
-      "@plume/redis": ["packages/redis/src/index.ts"],
-      "@plume/redis/*": ["packages/redis/src/*"],
-
-      "@plume/rabbitmq": ["packages/rabbitmq/src/index.ts"],
-      "@plume/rabbitmq/*": ["packages/rabbitmq/src/*"],
-
-      "@plume/grpc-types": ["packages/grpc-types/src/index.ts"],
-      "@plume/grpc-types/*": ["packages/grpc-types/src/*"],
-
-      "@plume/ui": ["packages/ui/src/index.ts"],
-      "@plume/ui/*": ["packages/ui/src/*"],
-
-      "@plume/config": ["packages/config/index.ts"],
-      "@plume/config/*": ["packages/config/*"]
+      "@plume/auth": ["packages/auth/src"],
+      "@plume/database": ["packages/database/src"],
+      "@plume/ui": ["packages/ui/src"],
+      "@plume/logger": ["packages/logger/src"],
+      "@plume/validation": ["packages/validation/src"],
+      "@plume/redis": ["packages/redis/src"],
+      "@plume/rabbitmq": ["packages/rabbitmq/src"],
+      "@plume/grpc-types": ["packages/grpc-types/src"],
+      "@plume/config": ["packages/config/src"],
+      "@plume/types": ["packages/types/src"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

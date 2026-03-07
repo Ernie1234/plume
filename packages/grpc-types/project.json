@@ -1,0 +1,23 @@
+{
+  "name": "grpc-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/grpc-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/grpc-types",
+        "main": "packages/grpc-types/src/index.ts",
+        "tsConfig": "packages/grpc-types/tsconfig.lib.json",
+        "assets": [
+          "packages/grpc-types/*.md"
+        ]
+      }
+    }
+  }
+}
