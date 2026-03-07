@@ -10,7 +10,7 @@
     "dev:web": "nx serve web",
     "dev:gateway": "nx serve api-gateway",
     "dev:infra": "docker-compose -f docker-compose.dev.yml up -d",
-    "dev:all": "pnpm dev:infra && node -e \"const net = require('net'); const host='localhost'; const port=5432; function waitForPostgres() { return new Promise(resolve => { const tryConnect = () => { const socket = new net.Socket(); socket.setTimeout(1000); socket.on('connect', () => { socket.destroy(); resolve(); }); socket.on('error', () => setTimeout(tryConnect, 1000)); socket.on('timeout', () => { socket.destroy(); setTimeout(tryConnect, 1000); }); socket.connect(port, host); }; tryConnect(); }); } (async () => { console.log('Waiting for Postgres...'); await waitForPostgres(); console.log('Postgres is ready!'); process.exit(0); })()\" && nx run-many --target=serve --projects=user-service,api-gateway,web --parallel",
+    "dev:all": "pnpm dev:infra && node scripts/wait-for-postgres.js && nx run-many --target=serve --projects=user-service,api-gateway,web --parallel",
     "build": "nx run-many --target=build --all",
     "build:affected": "nx affected --target=build",
     "test": "nx run-many --target=test --all",
