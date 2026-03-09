@@ -1,0 +1,232 @@
+syntax = "proto3";
+
+package plume.user;
+
+option java_package = "com.plume.user";
+option java_outer_classname = "UserProto";
+
+// ===========================
+// USER SERVICE
+// ===========================
+service UserService {
+  // User CRUD
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+  rpc GetUserByUsername(GetUserByUsernameRequest) returns (UserResponse);
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse);
+  rpc CreateUser(CreateUserRequest) returns (UserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+  // Auth
+  rpc ValidateCredentials(ValidateCredentialsRequest) returns (ValidateCredentialsResponse);
+  rpc StoreRefreshToken(StoreRefreshTokenRequest) returns (StoreRefreshTokenResponse);
+  rpc RevokeRefreshToken(RevokeRefreshTokenRequest) returns (RevokeRefreshTokenResponse);
+  rpc IsRefreshTokenValid(IsRefreshTokenValidRequest) returns (IsRefreshTokenValidResponse);
+
+  // Follow
+  rpc FollowUser(FollowRequest) returns (FollowResponse);
+  rpc UnfollowUser(UnfollowRequest) returns (UnfollowResponse);
+  rpc GetFollowers(GetFollowersRequest) returns (GetFollowersResponse);
+  rpc GetFollowing(GetFollowingRequest) returns (GetFollowingResponse);
+  rpc GetFollowerIds(GetFollowerIdsRequest) returns (GetFollowerIdsResponse);
+  rpc IsFollowing(IsFollowingRequest) returns (IsFollowingResponse);
+  rpc GetFollowerCount(GetFollowerCountRequest) returns (GetFollowerCountResponse);
+
+  // Profile
+  rpc UpdateProfile(UpdateProfileRequest) returns (UserResponse);
+}
+
+// --- Enums ---
+enum UserRole {
+  USER_ROLE_UNSPECIFIED = 0;
+  USER_ROLE_USER = 1;
+  USER_ROLE_ADMIN = 2;
+  USER_ROLE_MODERATOR = 3;
+}
+
+// --- User Messages ---
+message User {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string display_name = 4;
+  optional string bio = 5;
+  optional string avatar_url = 6;
+  optional string banner_url = 7;
+  int32 follower_count = 8;
+  int32 following_count = 9;
+  int32 tweet_count = 10;
+  bool is_verified = 11;
+  bool is_celebrity = 12;
+  string created_at = 13;
+  string updated_at = 14;
+  UserRole role = 15; // Added from TS/Prisma
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetUserByUsernameRequest {
+  string username = 1;
+}
+
+message GetUsersRequest {
+  repeated string user_ids = 1;
+}
+
+message GetUsersResponse {
+  repeated User users = 1;
+}
+
+message CreateUserRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string display_name = 4;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  optional string display_name = 2;
+  optional string bio = 3;
+  optional string avatar_url = 4;
+  optional string banner_url = 5;
+  optional string location = 6;
+  optional string website = 7;
+}
+
+message UpdateProfileRequest {
+  string user_id = 1;
+  optional string display_name = 2;
+  optional string bio = 3;
+  optional string avatar_media_id = 4;
+  optional string banner_media_id = 5;
+  optional string location = 6;
+  optional string website = 7;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message DeleteUserResponse {
+  bool success = 1;
+}
+
+message UserResponse {
+  User user = 1;
+}
+
+// --- Auth Messages ---
+message ValidateCredentialsRequest {
+  string identifier = 1;
+  string password = 2;
+}
+
+message ValidateCredentialsResponse {
+  bool valid = 1;
+  optional User user = 2;
+  optional string error = 3;
+}
+
+message StoreRefreshTokenRequest {
+  string user_id = 1;
+  string token_id = 2;
+  string expires_at = 3;
+}
+
+message StoreRefreshTokenResponse {
+  bool success = 1;
+}
+
+message RevokeRefreshTokenRequest {
+  string token_id = 1;
+}
+
+message RevokeRefreshTokenResponse {
+  bool success = 1;
+}
+
+message IsRefreshTokenValidRequest {
+  string token_id = 1;
+}
+
+message IsRefreshTokenValidResponse {
+  bool valid = 1;
+  optional string user_id = 2;
+}
+
+// --- Follow Messages ---
+message FollowRequest {
+  string follower_id = 1;
+  string following_id = 2;
+}
+
+message FollowResponse {
+  bool success = 1;
+  bool was_celebrity_threshold_crossed = 2;
+}
+
+message UnfollowRequest {
+  string follower_id = 1;
+  string following_id = 2;
+}
+
+message UnfollowResponse {
+  bool success = 1;
+}
+
+message GetFollowersRequest {
+  string user_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetFollowersResponse {
+  repeated User followers = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
+
+message GetFollowingRequest {
+  string user_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetFollowingResponse {
+  repeated User following = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
+
+message GetFollowerIdsRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  optional string cursor = 3;
+}
+
+message GetFollowerIdsResponse {
+  repeated string follower_ids = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
+
+message IsFollowingRequest {
+  string follower_id = 1;
+  string following_id = 2;
+}
+
+message IsFollowingResponse {
+  bool is_following = 1;
+}
+
+message GetFollowerCountRequest {
+  string user_id = 1;
+}
+
+message GetFollowerCountResponse {
+  int32 count = 1;
+  bool is_celebrity = 2;
+}

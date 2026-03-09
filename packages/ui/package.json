@@ -3,9 +3,23 @@
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
+  "sideEffects": false,
   "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "require": "./src/index.js"
+    }
+  },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.5.0",
     "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

@@ -1,0 +1,179 @@
+syntax = "proto3";
+
+package plume.tweet;
+
+// ===========================
+// TWEET SERVICE
+// ===========================
+service TweetService {
+  rpc CreateTweet(CreateTweetRequest) returns (TweetResponse);
+  rpc GetTweet(GetTweetRequest) returns (TweetResponse);
+  rpc GetTweets(GetTweetsRequest) returns (GetTweetsResponse);
+  rpc DeleteTweet(DeleteTweetRequest) returns (DeleteTweetResponse);
+  rpc LikeTweet(LikeRequest) returns (LikeResponse);
+  rpc UnlikeTweet(UnlikeRequest) returns (UnlikeResponse);
+
+  // Added Bookmark Methods
+  rpc BookmarkTweet(BookmarkRequest) returns (BookmarkResponse);
+  rpc UnbookmarkTweet(UnbookmarkRequest) returns (UnbookmarkResponse);
+
+  rpc GetTweetsByUser(GetTweetsByUserRequest) returns (GetTweetsByUserResponse);
+  rpc GetReplies(GetRepliesRequest) returns (GetRepliesResponse);
+  rpc IncrementView(IncrementViewRequest) returns (IncrementViewResponse);
+}
+
+// --- Enums ---
+enum TweetType {
+  TWEET_TYPE_UNSPECIFIED = 0;
+  TWEET_TYPE_TWEET = 1;
+  TWEET_TYPE_REPLY = 2;
+  TWEET_TYPE_RETWEET = 3;
+  TWEET_TYPE_QUOTE = 4;
+}
+
+enum MediaType {
+  MEDIA_TYPE_UNSPECIFIED = 0;
+  MEDIA_TYPE_IMAGE = 1;
+  MEDIA_TYPE_VIDEO = 2;
+  MEDIA_TYPE_GIF = 3;
+}
+
+// --- Messages ---
+message Media {
+  string id = 1;
+  string url = 2;
+  MediaType type = 3; // Updated to Enum
+  optional int32 width = 4;
+  optional int32 height = 5;
+  optional string alt_text = 6;
+}
+
+message Tweet {
+  string id = 1;
+  string content = 2;
+  string author_id = 3;
+  TweetType type = 4; // Updated to Enum
+  optional string parent_id = 5;
+  optional string quoted_tweet_id = 6;
+  repeated Media media = 7;
+  int32 like_count = 8;
+  int32 retweet_count = 9;
+  int32 reply_count = 10;
+  int32 quote_count = 11;
+  int32 view_count = 12;
+  repeated string hashtags = 13;
+  repeated string mentions = 14;
+  string created_at = 15;
+  string updated_at = 16;
+  optional bool is_liked = 17;
+  optional bool is_retweeted = 18;
+  optional bool is_bookmarked = 19; // Added from TS Interface
+}
+
+message CreateTweetRequest {
+  string content = 1;
+  string author_id = 2;
+  TweetType type = 3; // Updated to Enum
+  optional string parent_id = 4;
+  optional string quoted_tweet_id = 5;
+  repeated string media_ids = 6;
+}
+
+message GetTweetRequest {
+  string tweet_id = 1;
+  optional string requesting_user_id = 2;
+}
+
+message GetTweetsRequest {
+  repeated string tweet_ids = 1;
+  optional string requesting_user_id = 2;
+}
+
+message GetTweetsResponse {
+  repeated Tweet tweets = 1;
+}
+
+message TweetResponse {
+  Tweet tweet = 1;
+}
+
+message DeleteTweetRequest {
+  string tweet_id = 1;
+  string user_id = 2;
+}
+
+message DeleteTweetResponse {
+  bool success = 1;
+}
+
+message LikeRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message LikeResponse {
+  bool success = 1;
+  int32 like_count = 2;
+}
+
+message UnlikeRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message UnlikeResponse {
+  bool success = 1;
+  int32 like_count = 2;
+}
+
+message BookmarkRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message BookmarkResponse {
+  bool success = 1;
+}
+
+message UnbookmarkRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message UnbookmarkResponse {
+  bool success = 1;
+}
+
+message GetTweetsByUserRequest {
+  string user_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+  optional string requesting_user_id = 4;
+}
+
+message GetTweetsByUserResponse {
+  repeated Tweet tweets = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
+
+message GetRepliesRequest {
+  string tweet_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetRepliesResponse {
+  repeated Tweet replies = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
+
+message IncrementViewRequest {
+  string tweet_id = 1;
+  string user_id = 2;
+}
+
+message IncrementViewResponse {
+  int32 view_count = 1;
+}

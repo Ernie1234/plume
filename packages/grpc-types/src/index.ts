@@ -1,1 +1,1 @@
-export * from './lib/grpc-types';
+export * from './loader';

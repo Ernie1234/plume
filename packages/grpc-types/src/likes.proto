@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package plume.likes;
+
+service LikesService {
+  rpc LikeTweet(LikeTweetRequest) returns (LikeTweetResponse);
+  rpc UnlikeTweet(UnlikeTweetRequest) returns (UnlikeTweetResponse);
+  rpc GetTweetLikes(GetTweetLikesRequest) returns (GetTweetLikesResponse);
+}
+
+message LikeTweetRequest {
+  string tweet_id = 1;
+  string user_id = 2;
+}
+
+message LikeTweetResponse {
+  bool success = 1;
+  int32 likes_count = 2;
+}
+
+message UnlikeTweetRequest {
+  string tweet_id = 1;
+  string user_id = 2;
+}
+
+message UnlikeTweetResponse {
+  bool success = 1;
+  int32 likes_count = 2;
+}
+
+message GetTweetLikesRequest {
+  string tweet_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetTweetLikesResponse {
+  repeated string user_ids = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}

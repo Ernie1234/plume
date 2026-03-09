@@ -3,9 +3,24 @@
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
+  "sideEffects": false,
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "require": "./src/index.js"
+    }
+  },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "@plume/logger": "workspace:*",
+    "@plume/types": "workspace:*",
+    "ioredis": "^5.4.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
   }
 }

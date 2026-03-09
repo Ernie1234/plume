@@ -1,1 +1,2 @@
-export * from './lib/rabbitmq';
+export * from './client';
+export * from './patterns';

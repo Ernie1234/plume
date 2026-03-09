@@ -62,7 +62,9 @@
       "exclude": [
         "api-gateway-e2e/**/*",
         "apps/api-gateway-e2e/**/*",
-        "apps/user-service-e2e/**/*"
+        "apps/user-service-e2e/**/*",
+        "apps/tweets-service-e2e/**/*",
+        "apps/realtime-service-e2e/**/*"
       ]
     },
     {

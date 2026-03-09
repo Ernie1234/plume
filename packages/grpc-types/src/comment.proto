@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package plume.comment;
+
+service CommentService {
+  rpc CreateComment(CreateCommentRequest) returns (CommentResponse);
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse);
+  rpc GetCommentsByTweet(GetCommentsByTweetRequest) returns (GetCommentsByTweetResponse);
+}
+
+message Comment {
+  string id = 1;
+  string tweet_id = 2;
+  string author_id = 3;
+  string content = 4;
+  string created_at = 5;
+}
+
+message CreateCommentRequest {
+  string tweet_id = 1;
+  string author_id = 2;
+  string content = 3;
+}
+
+message CommentResponse {
+  Comment comment = 1;
+}
+
+message DeleteCommentRequest {
+  string comment_id = 1;
+  string user_id = 2;
+}
+
+message DeleteCommentResponse {
+  bool success = 1;
+}
+
+message GetCommentsByTweetRequest {
+  string tweet_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetCommentsByTweetResponse {
+  repeated Comment comments = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}

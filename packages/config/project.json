@@ -1,18 +1,23 @@
 {
   "name": "@plume/config",
-  "version": "0.0.1",
-  "private": true,
-  "type": "commonjs",
-  "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js"
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/config/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/config",
+        "main": "packages/config/src/index.ts",
+        "tsConfig": "packages/config/tsconfig.lib.json",
+        "assets": [
+          "packages/config/*.md"
+        ]
+      }
     }
-  },
-  "dependencies": {
-    "tslib": "^2.6.2"
   }
 }

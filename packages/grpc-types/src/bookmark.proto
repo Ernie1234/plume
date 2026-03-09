@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package plume.bookmark;
+
+service BookmarkService {
+  rpc BookmarkTweet(BookmarkTweetRequest) returns (BookmarkTweetResponse);
+  rpc UnbookmarkTweet(UnbookmarkTweetRequest) returns (UnbookmarkTweetResponse);
+  rpc GetBookmarks(GetBookmarksRequest) returns (GetBookmarksResponse);
+}
+
+message BookmarkTweetRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message BookmarkTweetResponse {
+  bool success = 1;
+}
+
+message UnbookmarkTweetRequest {
+  string user_id = 1;
+  string tweet_id = 2;
+}
+
+message UnbookmarkTweetResponse {
+  bool success = 1;
+}
+
+message GetBookmarksRequest {
+  string user_id = 1;
+  optional string cursor = 2;
+  int32 limit = 3;
+}
+
+message GetBookmarksResponse {
+  repeated string tweet_ids = 1;
+  optional string next_cursor = 2;
+  bool has_more = 3;
+}
